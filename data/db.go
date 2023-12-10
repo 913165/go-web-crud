@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"log"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -10,11 +11,12 @@ import (
 var db *sql.DB
 
 func InitDB() {
-	user := "root"
-	password := "root123"
-	hostname := "4.246.131.100"
-	port := "3306"
-	dbname := "empdb"
+
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	hostname := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	dbname := os.Getenv("DB_NAME")
 
 	var err error
 	db, err = sql.Open("mysql", user+":"+password+"@tcp("+hostname+":"+port+")/"+dbname)
