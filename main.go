@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -122,6 +123,39 @@ func main() {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			w.Write([]byte("Method not allowed"))
 		}
+	})
+
+	// Endpoint to call payroll service at http://localhost:8080/payroll/empid to get payroll information for an employee
+	http.HandleFunc("/netpay/", func(w http.ResponseWriter, r *http.Request) {
+		urlParts := strings.Split(r.URL.Path, "/")
+		if len(urlParts) != 3 {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Invalid URL"))
+			return
+		}
+		employeeID, err := strconv.Atoi(urlParts[2])
+		log.Println("Employee ID: ", employeeID)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Invalid employee ID"))
+			return
+		}
+
+		// PAYROLL_SERVICE is the environment variable set to the payroll service URL
+		// Call payroll service
+		PAYROLL_SERVICE := os.Getenv("PAYROLL_SERVICE")
+
+		resp, err := http.Get(PAYROLL_SERVICE + strconv.Itoa(employeeID))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer resp.Body.Close()
+
+		// Copy the response from the payroll service to the response writer
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(resp.StatusCode)
+		resp.Write(w)
 	})
 
 	// Start the server
