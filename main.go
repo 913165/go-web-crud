@@ -158,6 +158,12 @@ func main() {
 		resp.Write(w)
 	})
 
+	// create /revision endpoint and return hardcode "v1"
+	http.HandleFunc("/revision", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode("v1")
+	})
+
 	// Start the server
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

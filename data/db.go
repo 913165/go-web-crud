@@ -10,13 +10,20 @@ import (
 
 var db *sql.DB
 
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
+
 func InitDB() {
 
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	hostname := os.Getenv("DB_HOST")
-	port := os.Getenv("DB_PORT")
-	dbname := os.Getenv("DB_NAME")
+	user := getEnv("DB_USER", "root")
+	password := getEnv("DB_PASSWORD", "root123")
+	hostname := getEnv("DB_HOST", "4.246.131.100")
+	port := getEnv("DB_PORT", "3306")
+	dbname := getEnv("DB_NAME", "empdb")
 
 	var err error
 	db, err = sql.Open("mysql", user+":"+password+"@tcp("+hostname+":"+port+")/"+dbname)
