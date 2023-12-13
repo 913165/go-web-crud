@@ -31,6 +31,6 @@ jobs:
           service: go-web-cloudrun
           region: us-central1
           # NOTE: If required, update to the appropriate source folder
-          source: ./
+          source: ../
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
