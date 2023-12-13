@@ -161,7 +161,7 @@ func main() {
 	// create /revision endpoint and return hardcode "v1"
 	http.HandleFunc("/revision", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode("revision v1")
+		json.NewEncoder(w).Encode("revision v2")
 	})
 
 	// Start the server
