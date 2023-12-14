@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_ID: trusty-solution-405810 # TODO: update Google Cloud project id
+  PROJECT_ID: trusty-solution-405810 # TODO: update Google Cloud project id2
   SERVICE: YOUR_SERVICE_NAME # TODO: update Cloud Run service name
   REGION: YOUR_SERVICE_REGION # TODO: update Cloud Run service region
 
