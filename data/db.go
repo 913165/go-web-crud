@@ -21,7 +21,7 @@ func InitDB() {
 
 	user := getEnv("DB_USER", "root")
 	password := getEnv("DB_PASSWORD", "root123")
-	hostname := getEnv("DB_HOST", "4.246.131.100")
+	hostname := getEnv("DB_HOST", "172.178.82.33")
 	port := getEnv("DB_PORT", "3306")
 	dbname := getEnv("DB_NAME", "empdb")
 
